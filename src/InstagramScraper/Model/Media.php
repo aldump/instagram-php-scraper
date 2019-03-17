@@ -151,6 +151,11 @@ class Media extends AbstractModel
     protected $commentsNextPage = '';
 
     /**
+     * @var bool
+     */
+    protected $isCommentsDisabled = false;
+
+    /**
      * @var Media[]|array
      */
     protected $sidecarMedias = [];
@@ -433,6 +438,14 @@ class Media extends AbstractModel
     }
 
     /**
+     * @return bool
+     */
+    public function isCommentsDisabled(): bool
+    {
+        return $this->isCommentsDisabled;
+    }
+
+    /**
      * @param $value
      * @param $prop
      */
@@ -549,6 +562,9 @@ class Media extends AbstractModel
                 break;
             case 'is_ad':
                 $this->isAd = $value;
+                break;
+            case 'comments_disabled':
+                $this->isCommentsDisabled = $value;
                 break;
             case 'taken_at_timestamp':
                 $this->createdTime = $value;

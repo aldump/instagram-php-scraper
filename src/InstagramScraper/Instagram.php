@@ -662,6 +662,11 @@ class Instagram
             $this->parseCookies($response->headers);
             $jsonResponse = $this->decodeRawBodyToJson($response->raw_body);
             $nodes = $jsonResponse['data']['shortcode_media']['edge_media_to_comment']['edges'];
+
+            if(! is_array($nodes)) {
+                $nodes = [];
+            }
+
             foreach ($nodes as $commentArray) {
                 $comments[] = Comment::create($commentArray['node']);
                 $index++;
@@ -1279,7 +1284,7 @@ class Instagram
             }
             $cookies = $this->parseCookies($response->headers);
 
-            $mid = $cookies['mid'];
+            $mid = $cookies['mid'] ?? '';
             $headers = [
                 'cookie' => "ig_cb=1; csrftoken=$csrfToken; mid=$mid;",
                 'referer' => Endpoints::BASE_URL . '/',
